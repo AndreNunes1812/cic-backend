@@ -115,7 +115,7 @@ class VendedorController {
 
     const vendedor = await Vendedor.findAll({
       where: {
-        name: { [Op.like]: '%' + req.query.description + '%' },
+        nome: { [Op.like]: '%' + req.query.description + '%' },
       },
     });
 
