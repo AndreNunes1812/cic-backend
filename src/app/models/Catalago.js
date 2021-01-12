@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 
 const uuid = require('uuidv4');
 
-class Vendedor extends Model {
+class Catalago extends Model {
 
   static init(sequelize) {
     super.init(
@@ -14,7 +14,8 @@ class Vendedor extends Model {
           primaryKey: true,
           allowNull: false
         },
-        nome: Sequelize.STRING,
+        vendedor_id: Sequelize.INTEGER,
+        nome_arquivo: Sequelize.TEXT,
         ativo: Sequelize.STRING(1),
         created_at: {
           type: Sequelize.DATE,
@@ -32,13 +33,14 @@ class Vendedor extends Model {
       }
     );
 
-    this.addHook('beforeSave', async vendedor => {
+    this.addHook('beforeSave', async catalago => {
 
     });
+
 
     return this;
   }
 
 }
 
-module.exports = Vendedor;
+module.exports = Catalago;

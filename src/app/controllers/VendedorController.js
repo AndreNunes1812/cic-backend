@@ -109,13 +109,10 @@ class VendedorController {
   async like(req, res) {
     const { description } = req.body;
 
-//    console.log('query :', req.query.description);
-    // console.log('body :', description);
-    // Db.models.Person.findAll(where: {firstName: {$iLike: '%name%'}});
-
     const vendedor = await Vendedor.findAll({
       where: {
         nome: { [Op.like]: '%' + req.query.description + '%' },
+        ativo: 'S'
       },
     });
 
