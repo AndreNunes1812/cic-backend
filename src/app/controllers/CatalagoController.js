@@ -79,7 +79,6 @@ class catalagoController {
   }
 
   async patch(req, res) {
-
     const { id, vendedor_id } = req.body;
 
     console.log('vendedor:', vendedor_id, id);
@@ -89,7 +88,6 @@ class catalagoController {
     const catalago = await Catalago.findByPk(id);
 
     try {
-
       await catalago.update(
         { nome_arquivo: req.file.filename },
         {
@@ -104,26 +102,34 @@ class catalagoController {
         '..',
         '..',
         '..',
-        '..',
-        'backend',
         'public',
         'images'
       );
 
+      const caminhoArquivo = caminho + '/' + req.file.filename;
+      // const caminhoProducao = '/home/ibeabuilt/apps_nodejs/backendcic/public/images/'+ req.file.filename
 
-      const caminhoArquivo = caminho + '/'+ req.file.filename;
+      console.log('caminho do Arquivo 5:', caminhoArquivo);
 
-      console.log('req:', caminhoArquivo);
-
-       CSVToJSON()
+      CSVToJSON()
         .fromFile(caminhoArquivo)
-        .then( async catalago => {
+        .then(async catalago => {
+          catalago.map(async livro => {
+            const livroJaRegistrado = await Itens_catalago.findOne({
+              where: {
+                catalago_id: id,
+                title: livro.title,
+                authors: livro.authors,
+                price: livro.price,
+                publisher: livro.publisher,
+                num_pages: livro.numPages,
+              },
+            });
 
-          catalago.map( async livro => {
+            console.log('livroJaRegistrado:', livroJaRegistrado);
 
-            //  const jaRegistrado = await Itens_catalago.findOrCreate
-
-              await Itens_catalago.findOrCreate({
+            if (livroJaRegistrado !== null) {
+              await Itens_catalago.create({
                 catalago_id: id,
                 title: livro.title,
                 authors: livro.authors,
@@ -132,10 +138,10 @@ class catalagoController {
                 num_pages: livro.numPages,
                 publication_date: livro.publicationDate,
               });
+            }
           });
 
           console.log('Proximo ');
-
         })
         .catch(err => {
           // log error if any
@@ -145,7 +151,6 @@ class catalagoController {
       console.log('--------------------------------');
 
       return res.status(201).json(catalago);
-
     } catch (error) {
       const { errors } = JSON.parse(JSON.stringify(error));
 
