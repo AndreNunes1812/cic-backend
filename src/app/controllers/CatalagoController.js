@@ -107,9 +107,6 @@ class catalagoController {
       );
 
       const caminhoArquivo = caminho + '/' + req.file.filename;
-      // const caminhoProducao = '/home/ibeabuilt/apps_nodejs/backendcic/public/images/'+ req.file.filename
-
-      console.log('caminho do Arquivo 5:', caminhoArquivo);
 
       CSVToJSON()
         .fromFile(caminhoArquivo)
@@ -130,7 +127,7 @@ class catalagoController {
             console.log('livroJaRegistrado:', livroJaRegistrado);
             console.log('Vendedor ID:', vendedor_id);
 
-            if (livroJaRegistrado !== null) {
+            if (livroJaRegistrado === null) {
               await Itens_catalago.create({
                 vendedor_id: vendedor_id,
                 title: livro.title,
