@@ -117,7 +117,7 @@ class catalagoController {
           catalago.map(async livro => {
             const livroJaRegistrado = await Itens_catalago.findOne({
               where: {
-                catalago_id: id,
+                vendedor_id: vendedor_id,
                 title: livro.title,
                 authors: livro.authors,
                 price: livro.price,
