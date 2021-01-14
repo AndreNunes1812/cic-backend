@@ -127,6 +127,7 @@ class catalagoController {
             });
 
             console.log('livroJaRegistrado:', livroJaRegistrado);
+            console.log('Catalago ID:', id);
 
             if (livroJaRegistrado !== null) {
               await Itens_catalago.create({
