@@ -115,6 +115,7 @@ class catalagoController {
         .fromFile(caminhoArquivo)
         .then(async catalago => {
           catalago.map(async livro => {
+
             const livroJaRegistrado = await Itens_catalago.findOne({
               where: {
                 vendedor_id: vendedor_id,
@@ -127,11 +128,11 @@ class catalagoController {
             });
 
             console.log('livroJaRegistrado:', livroJaRegistrado);
-            console.log('Catalago ID:', id);
+            console.log('Vendedor ID:', vendedor_id);
 
             if (livroJaRegistrado !== null) {
               await Itens_catalago.create({
-                catalago_id: id,
+                vendedor_id: vendedor_id,
                 title: livro.title,
                 authors: livro.authors,
                 price: livro.price,
