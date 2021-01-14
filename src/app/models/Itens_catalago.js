@@ -14,7 +14,7 @@ class ItensCatalagos extends Model {
           primaryKey: true,
           allowNull: false
         },
-        catalago_id: Sequelize.INTEGER,
+        vendedor_id: Sequelize.INTEGER,
         title: Sequelize.STRING,
         authors: Sequelize.STRING,
         num_pages: Sequelize.DECIMAL(10),

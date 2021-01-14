@@ -11,7 +11,7 @@ module.exports = {
         primaryKey: true,
       },
 
-      catalago_id: {
+      vendedor_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },
