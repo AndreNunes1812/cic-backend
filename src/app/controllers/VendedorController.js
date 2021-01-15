@@ -5,8 +5,6 @@ class VendedorController {
 
   async index(req, res) {
 
-    console.log(' ****  index vendedor');
-
     const vendedor = await Vendedor.findAll({
       attributes: ['id', 'nome' ,'ativo'],
 
@@ -24,20 +22,12 @@ class VendedorController {
 
   async create(req, res) {
 
-    console.log('body:', req.body)
-
     try {
       const vendedor = await Vendedor.create(req.body);
 
       res.status(201).json(vendedor);
 
     } catch (error) {
-
-    //  const { errors } = JSON.stringify(error);
-
-      console.log('errors:', error);
-
-      // const erro = errors[0].message
 
       res.status(401).json({
         message: 'erro ao criar Vendedor',
@@ -47,8 +37,6 @@ class VendedorController {
   }
 
   async findById(req, res) {
-
-    console.log('find', req.params.id);
 
     const { id } = req.params;
 
@@ -60,8 +48,6 @@ class VendedorController {
   async update(req, res) {
 
     const { id } = req.params;
-
-    console.log(id)
 
     const vendedor = await Vendedor.findByPk(id);
 

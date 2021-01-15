@@ -8,7 +8,6 @@ const CSVToJSON = require('csvtojson');
 
 class catalagoController {
   async index(req, res) {
-    console.log(' ****  index catalago ****');
 
     const catalago = await Catalago.findAll({
       attributes: ['id', 'vendedor_id', 'nome_arquivo', 'ativo'],
@@ -25,19 +24,13 @@ class catalagoController {
   }
 
   async create(req, res) {
-    console.log('body:', req.body);
 
     try {
+
       const catalago = await Catalago.create(req.body);
 
       res.status(201).json(catalago);
     } catch (error) {
-      //  const { errors } = JSON.stringify(error);
-
-      console.log('errors:', error);
-
-      // const erro = errors[0].message
-
       res.status(401).json({
         message: 'erro ao criar o catalago',
         // erro,
@@ -46,7 +39,6 @@ class catalagoController {
   }
 
   async findById(req, res) {
-    console.log('find', req.params.id);
 
     const { id } = req.params;
 
@@ -57,8 +49,6 @@ class catalagoController {
 
   async update(req, res) {
     const { id } = req.params;
-
-    console.log(id);
 
     const catalago = await Catalago.findByPk(id);
 
@@ -81,10 +71,6 @@ class catalagoController {
   async patch(req, res) {
     const { id, vendedor_id } = req.body;
 
-    console.log('vendedor:', vendedor_id, id);
-
-    console.log('headers:', req.file.filename);
-
     const catalago = await Catalago.findByPk(id);
 
     try {
@@ -94,8 +80,6 @@ class catalagoController {
           where: { id },
         }
       );
-
-      console.log('******************************');
 
       const caminho = path.resolve(
         __dirname,
@@ -113,7 +97,7 @@ class catalagoController {
         .then(async catalago => {
           catalago.map(async livro => {
 
-            const livroJaRegistrado = await Itens_catalago.findOne({
+            const livroJaRegistradoComVendedor = await Itens_catalago.findOne({
               where: {
                 vendedor_id: vendedor_id,
                 title: livro.title,
@@ -124,10 +108,7 @@ class catalagoController {
               },
             });
 
-            console.log('livroJaRegistrado:', livroJaRegistrado);
-            console.log('Vendedor ID:', vendedor_id);
-
-            if (livroJaRegistrado === null) {
+            if (livroJaRegistradoComVendedor === null) {
               await Itens_catalago.create({
                 vendedor_id: vendedor_id,
                 title: livro.title,
@@ -140,14 +121,11 @@ class catalagoController {
             }
           });
 
-          console.log('Proximo ');
         })
         .catch(err => {
           // log error if any
           console.log(err);
         });
-
-      console.log('--------------------------------');
 
       return res.status(201).json(catalago);
     } catch (error) {

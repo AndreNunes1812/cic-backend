@@ -5,14 +5,8 @@ const uploadConfig = require('./config/upload');
 const vendedorController = require('./app/controllers/VendedorController');
 const catalagoController = require('./app/controllers/CatalagoController');
 
-// const sessionController = require('./app/controllers/SessionController');
-
-// const authMiddleware = require('./app/middlewares/auth');
-
 const routes = new Router();
 const upload = multer(uploadConfig);
-
-// routes.use(authMiddleware);
 
 // Routes Vendedor
 routes.put('/vendedor/:id', vendedorController.update);
